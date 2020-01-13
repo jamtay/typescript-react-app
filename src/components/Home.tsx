@@ -63,6 +63,7 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
                           <div className="btn-group" style={{ marginBottom: "20px" }}>
                             <Link to={`edit/${customer._id}`} className="btn btn-sm btn-outline-secondary">Edit Customer </Link>
                             <button className="btn btn-sm btn-outline-secondary" onClick={() => this.deleteCustomer(customer._id)}>Delete Customer</button>
+                            <Link to={`view/${customer._id}`} className="btn btn-sm btn-outline-secondary">View Customer </Link>
                           </div>
                         </div>
                       </td>

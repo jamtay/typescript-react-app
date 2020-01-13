@@ -4,6 +4,7 @@ import { Switch, Route, withRouter, RouteComponentProps, Link } from 'react-rout
 import Home from './components/Home';
 import Create from './components/customer/Create';
 import EditCustomer from './components/customer/Edit';
+import ViewCustomer from './components/customer/View';
 
 
 class App extends React.Component<RouteComponentProps<any>> {
@@ -26,6 +27,7 @@ class App extends React.Component<RouteComponentProps<any>> {
             <Route path={'/'} exact component={Home} />
             <Route path={'/create'} exact component={Create} />
             <Route path={'/edit/:id'} exact component={EditCustomer} />
+            <Route path={'/view/:id'} exact component={ViewCustomer}/>
           </Switch>
         </div>
     );

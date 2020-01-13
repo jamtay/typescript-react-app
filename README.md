@@ -1,0 +1,1 @@
+Simple frontend of contacts list. Slowly converting to connect to contact / search api built in a [different repo](https://github.com/jamtay/express-typescript-learning)

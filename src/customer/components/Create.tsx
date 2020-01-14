@@ -2,6 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Customer } from '../models/Customer';
 import { createNewCustomer } from '../services/customer';
+import DataEntryForm from './DataEntryForm';
 
 export interface IFormState {
   [key: string]: any;
@@ -46,7 +47,7 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
   private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     this.setState({
-      [e.currentTarget.name]: e.currentTarget.value
+      [e.currentTarget.id]: e.currentTarget.value
     });
   };
 
@@ -67,36 +68,11 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
                   The form was successfully submitted!
                 </div>
             )}
-            <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
-              <div className="form-group col-md-12">
-                <label htmlFor="firstName"> First Name </label>
-                <input type="text" id="firstName" onChange={e => this.handleInputChanges(e)} name="firstName" className="form-control" placeholder="Enter customer's first name" />
-              </div>
-              <div className="form-group col-md-12">
-                <label htmlFor="lastName"> Last Name </label>
-                <input type="text" id="lastName" onChange={(e) => this.handleInputChanges(e)} name="lastName" className="form-control" placeholder="Enter customer's last name" />
-              </div>
-              <div className="form-group col-md-12">
-                <label htmlFor="email"> Email </label>
-                <input type="email" id="email" onChange={(e) => this.handleInputChanges(e)} name="email" className="form-control" placeholder="Enter customer's email address" />
-              </div>
-              <div className="form-group col-md-12">
-                <label htmlFor="company"> Company </label>
-                <input type="text" id="company" onChange={(e) => this.handleInputChanges(e)} name="company" className="form-control" placeholder="Enter customer's company" />
-              </div>
-              <div className="form-group col-md-12">
-                <label htmlFor="phone"> Phone </label>
-                <input type="text" id="phone" onChange={(e) => this.handleInputChanges(e)} name="phone" className="form-control" placeholder="Enter customer's phone number" />
-              </div>
-              <div className="form-group col-md-4 pull-right">
-                <button className="btn btn-success" type="submit" id="create-customer">
-                  Create Customer
-                </button>
-                {loading &&
-                  <span className="fa fa-circle-o-notch fa-spin" />
-                }
-              </div>
-            </form>
+            <DataEntryForm
+                handleInputChanges={(e) => this.handleInputChanges(e)}
+                processFormSubmission={this.processFormSubmission}
+                loading={loading}
+            />
           </div>
         </div>
     )

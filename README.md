@@ -9,8 +9,7 @@ This is based on https://www.digitalocean.com/community/tutorials/how-to-build-a
 
 **TODO:** 
 
-- Add cypress tests
-- Refactor to smaller methods
+- Move success message to new component
+- Refactor to smaller methods (move code to Create folder, view, common, form etc. Add util methods)
 - Remove hardcoded localhost:3000 (add env file)
 - Add search endpoint to talk to search-api search endpoint
-- private vs public in TS?

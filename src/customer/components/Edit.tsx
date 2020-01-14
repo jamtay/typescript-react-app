@@ -2,6 +2,7 @@ import * as React from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {getCustomer, updateCustomer} from "../services/customer";
 import {Customer} from "../models/Customer";
+import DataEntryForm from "./DataEntryForm";
 
 export interface IFormState {
   id: number,
@@ -62,53 +63,15 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
             <div>
               <div className={"col-md-12 form-wrapper"}>
                 <h2> Edit Customer </h2>
-
                 {submitSuccess && (
                     <div className="alert alert-info" role="alert">
                       Customer's details has been edited successfully </div>
                 )}
-
-                <form id={"create-post-form"} onSubmit={this.processFormSubmission}
-                      noValidate={true}>
-                  <div className="form-group col-md-12">
-                    <label htmlFor="first_name"> First Name </label>
-                    <input type="text" id="firstName" defaultValue={this.state.customer.firstName}
-                           onChange={(e) => this.handleInputChanges(e)} name="firstName"
-                           className="form-control" placeholder="Enter customer's first name"/>
-                  </div>
-                  <div className="form-group col-md-12">
-                    <label htmlFor="last_name"> Last Name </label>
-                    <input type="text" id="lastName" defaultValue={this.state.customer.lastName}
-                           onChange={(e) => this.handleInputChanges(e)} name="lastName"
-                           className="form-control" placeholder="Enter customer's last name"/>
-                  </div>
-                  <div className="form-group col-md-12">
-                    <label htmlFor="email"> Email </label>
-                    <input type="email" id="email" defaultValue={this.state.customer.email}
-                           onChange={(e) => this.handleInputChanges(e)} name="email"
-                           className="form-control" placeholder="Enter customer's email address"/>
-                  </div>
-                  <div className="form-group col-md-12">
-                    <label htmlFor="company"> Company </label>
-                    <input type="text" id="company" defaultValue={this.state.customer.company}
-                           onChange={(e) => this.handleInputChanges(e)} name="company"
-                           className="form-control" placeholder="Enter customer's company"/>
-                  </div>
-                  <div className="form-group col-md-12">
-                    <label htmlFor="phone"> Phone </label>
-                    <input type="text" id="phone" defaultValue={this.state.customer.phone}
-                           onChange={(e) => this.handleInputChanges(e)} name="phone"
-                           className="form-control" placeholder="Enter customer's phone number"/>
-                  </div>
-                  <div className="form-group col-md-4 pull-right">
-                    <button className="btn btn-success" type="submit">
-                      Edit Customer
-                    </button>
-                    {loading &&
-                    <span className="fa fa-circle-o-notch fa-spin"/>
-                    }
-                  </div>
-                </form>
+                <DataEntryForm
+                  handleInputChanges={(e) => this.handleInputChanges(e)}
+                  processFormSubmission={this.processFormSubmission}
+                  loading={loading} customer={this.state.customer}
+                />
               </div>
             </div>
           </div>

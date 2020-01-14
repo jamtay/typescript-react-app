@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import {deleteCustomer, getCustomers} from "../services/customer";
 
-
 interface IState {
   customers: any[];
 }

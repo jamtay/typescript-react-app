@@ -17,7 +17,7 @@ class App extends React.Component<RouteComponentProps<any>> {
               </li>
 
               <li>
-                <Link to={'/create'}> Create Customer </Link>
+                <Link to={'/create'} id='create-customer-link'> Create Customer </Link>
               </li>
             </ul>
           </nav>

@@ -9,6 +9,7 @@ This is based on https://www.digitalocean.com/community/tutorials/how-to-build-a
 
 **TODO:** 
 
+- Add cypress tests
 - Refactor to smaller methods
 - Remove hardcoded localhost:3000 (add env file)
 - Add search endpoint to talk to search-api search endpoint

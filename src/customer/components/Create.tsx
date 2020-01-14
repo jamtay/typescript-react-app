@@ -56,14 +56,14 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
     return (
         <div>
           <div className={"col-md-12 form-wrapper"}>
-            <h2> Create Post </h2>
+            <h2 id="create-post-header"> Create Post </h2>
             {!submitSuccess && (
                 <div className="alert alert-info" role="alert">
                   Fill the form below to create a new post
                 </div>
             )}
             {submitSuccess && (
-                <div className="alert alert-info" role="alert">
+                <div className="alert alert-info" role="alert" id="success-banner">
                   The form was successfully submitted!
                 </div>
             )}
@@ -89,7 +89,7 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
                 <input type="text" id="phone" onChange={(e) => this.handleInputChanges(e)} name="phone" className="form-control" placeholder="Enter customer's phone number" />
               </div>
               <div className="form-group col-md-4 pull-right">
-                <button className="btn btn-success" type="submit">
+                <button className="btn btn-success" type="submit" id="create-customer">
                   Create Customer
                 </button>
                 {loading &&

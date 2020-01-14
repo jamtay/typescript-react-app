@@ -1,11 +1,10 @@
 import * as React from 'react';
 import './App.css';
 import { Switch, Route, withRouter, RouteComponentProps, Link } from 'react-router-dom';
-import Home from './components/Home';
-import Create from './components/customer/Create';
-import EditCustomer from './components/customer/Edit';
-import ViewCustomer from './components/customer/View';
-
+import Home from './customer/components/Home';
+import Create from './customer/components/Create';
+import EditCustomer from './customer/components/Edit';
+import ViewCustomer from './customer/components/View';
 
 class App extends React.Component<RouteComponentProps<any>> {
   public render() {

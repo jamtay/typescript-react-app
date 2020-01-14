@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import axios from 'axios';
+import {deleteCustomer, getCustomers} from "../services/customer";
 
 
 interface IState {
@@ -10,22 +10,20 @@ interface IState {
 export default class Home extends React.Component<RouteComponentProps, IState> {
   constructor(props: RouteComponentProps) {
     super(props);
-    this.state = { customers: [] }
+    this.state = { customers: [] };
   }
 
-  public componentDidMount(): void {
-    axios.get(`http://localhost:3000/api/v1/contact`).then(data => {
-      this.setState({ customers: data.data })
-    })
-  }
+  public async componentDidMount(): Promise<void> {
+    const customers = await getCustomers();
+    this.setState({ customers: customers });
+  };
 
-  public deleteCustomer(id: number) {
-    axios.delete(`http://localhost:3000/api/v1/contact/${id}`).then(data => {
-      const index = this.state.customers.findIndex(customer => customer._id === id);
-      this.state.customers.splice(index, 1);
-      this.props.history.push('/');
-    })
-  }
+  public async deleteCustomer(id: number): Promise<void> {
+    await deleteCustomer(id);
+    const index = this.state.customers.findIndex(customer => customer._id === id);
+    this.state.customers.splice(index, 1);
+    this.props.history.push('/');
+  };
 
   public render() {
     const customers = this.state.customers;
@@ -33,7 +31,7 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
         <div>
           {customers.length === 0 && (
               <div className="text-center">
-                <h2>No customer found at the moment</h2>
+                <h2>No customers found at the moment</h2>
               </div>
           )}
 
@@ -42,8 +40,8 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
               <table className="table table-bordered">
                 <thead className="thead-light">
                 <tr>
-                  <th scope="col">Firstname</th>
-                  <th scope="col">Lastname</th>
+                  <th scope="col">First name</th>
+                  <th scope="col">Last name</th>
                   <th scope="col">Email</th>
                   <th scope="col">Company</th>
                   <th scope="col">Phone</th>

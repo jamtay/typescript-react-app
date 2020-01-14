@@ -1,19 +1,11 @@
 import * as React from 'react';
-import axios from 'axios';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-
-//TODO: this can be moved somewhere
-export interface IValues {
-  firstName: string;
-  lastName: string;
-  email: string;
-  company: string;
-  phone: number;
-}
+import { Customer } from '../models/Customer';
+import { createNewCustomer } from '../services/customer';
 
 export interface IFormState {
   [key: string]: any;
-  values: IValues[];
+  values: Customer[];
   submitSuccess: boolean;
   loading: boolean;
 }
@@ -33,10 +25,9 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
     }
   }
 
-  //TODO: These can be moved to actions?
-  private processFormSubmission = (e: React.FormEvent<HTMLFormElement>): void => {
+  private processFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    this.setState({ loading: true })
+    this.setState({ loading: true });
     const formData = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -46,13 +37,10 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
     };
 
     this.setState({ submitSuccess: true, values: [...this.state.values, formData], loading: false });
-    //TODO: Convert to async await
-    //TODO: can move Axios calls to a separate place
-    axios.post(`http://localhost:3000/api/v1/contact`, formData).then(data => [
-        setTimeout(() => {
-          this.props.history.push('/');
-        }, 1500)
-    ]);
+    await createNewCustomer(formData);
+    setTimeout(() => {
+      this.props.history.push('/');
+    }, 1500);
   };
 
   private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
@@ -62,8 +50,6 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
     });
   };
 
-  //TODO: I feel this should be its own method
-  //TODO: Change form  ids to be underscores and change in the model above
   public render() {
     const { submitSuccess, loading } = this.state;
 
@@ -116,6 +102,5 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
     )
   }
 }
-
 
 export default withRouter(Create);

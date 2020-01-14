@@ -22,10 +22,9 @@ class ViewCustomer extends React.Component<RouteComponentProps<any>, IFormState>
     }
   }
 
-  public componentDidMount(): void {
-    axios.get(`http://localhost:3000/api/v1/contact/${this.state.id}`).then(data => {
-      this.setState({customer: data.data});
-    })
+  public async componentDidMount(): Promise<void> {
+    const response = await axios.get(`http://localhost:3000/api/v1/contact/${this.state.id}`)
+    this.setState({customer: response.data});
   }
 
   public render() {
@@ -33,9 +32,7 @@ class ViewCustomer extends React.Component<RouteComponentProps<any>, IFormState>
         <div className="App">
           {this.state.customer &&
           <div>
-            <h1> Customer List Management App</h1>
-            <p> Built with React.js and TypeScript </p>
-
+            <h1>Customer List Management App</h1>
             <div>
               <div className={"col-md-12 form-wrapper"}>
                 <h2> View Customer </h2>
@@ -67,4 +64,4 @@ class ViewCustomer extends React.Component<RouteComponentProps<any>, IFormState>
   }
 }
 
-export default withRouter(ViewCustomer)
+export default withRouter(ViewCustomer);

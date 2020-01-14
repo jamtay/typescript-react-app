@@ -3,6 +3,8 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Customer } from '../models/Customer';
 import { createNewCustomer } from '../services/customer';
 import DataEntryForm from './DataEntryForm';
+import SuccessMessage from './SuccessMessage';
+import FormField from './FormField';
 
 export interface IFormState {
   [key: string]: any;
@@ -64,15 +66,25 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
                 </div>
             )}
             {submitSuccess && (
-                <div className="alert alert-info" role="alert" id="success-banner">
+                <SuccessMessage>
                   The form was successfully submitted!
-                </div>
+                </SuccessMessage>
             )}
-            <DataEntryForm
-                handleInputChanges={(e) => this.handleInputChanges(e)}
-                processFormSubmission={this.processFormSubmission}
-                loading={loading}
-            />
+            <DataEntryForm processFormSubmission={this.processFormSubmission}>
+              <FormField name="firstName" type="text" placeholder="Enter customer's first name" onChange={this.handleInputChanges}>First Name</FormField>
+              <FormField name="lastName" type="text" placeholder="Enter customer's last name" onChange={this.handleInputChanges}>Last Name</FormField>
+              <FormField name="email" type="email" placeholder="Enter customer's email address" onChange={this.handleInputChanges}>Email</FormField>
+              <FormField name="company" type="text" placeholder="Enter customer's company" onChange={this.handleInputChanges}>Company</FormField>
+              <FormField name="phone" type="text" placeholder="Enter customer's phone number" onChange={this.handleInputChanges}>Phone number</FormField>
+              <div className="form-group col-md-4 pull-right">
+                <button className="btn btn-success" type="submit" id="create-customer">
+                  Create Customer
+                </button>
+                {loading &&
+                <span className="fa fa-circle-o-notch fa-spin" />
+                }
+              </div>
+            </DataEntryForm>
           </div>
         </div>
     )

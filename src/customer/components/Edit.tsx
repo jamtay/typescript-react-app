@@ -1,8 +1,10 @@
 import * as React from 'react';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {getCustomer, updateCustomer} from "../services/customer";
-import {Customer} from "../models/Customer";
-import DataEntryForm from "./DataEntryForm";
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { getCustomer, updateCustomer } from '../services/customer';
+import { Customer } from '../models/Customer';
+import DataEntryForm from './DataEntryForm';
+import SuccessMessage from './SuccessMessage';
+import FormField from './FormField';
 
 export interface IFormState {
   id: number,
@@ -52,29 +54,41 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
   };
 
   public render() {
-    const {submitSuccess, loading} = this.state;
+    const {submitSuccess, loading, customer} = this.state;
     return (
         <div className="App">
           {this.state.customer &&
-          <div>
-            <h1> Customer List Management App</h1>
-            <p> Built with React.js and TypeScript </p>
-
             <div>
-              <div className={"col-md-12 form-wrapper"}>
-                <h2> Edit Customer </h2>
-                {submitSuccess && (
-                    <div className="alert alert-info" role="alert">
-                      Customer's details has been edited successfully </div>
-                )}
-                <DataEntryForm
-                  handleInputChanges={(e) => this.handleInputChanges(e)}
-                  processFormSubmission={this.processFormSubmission}
-                  loading={loading} customer={this.state.customer}
-                />
+              <h1> Customer List Management App</h1>
+              <p> Built with React.js and TypeScript </p>
+
+              <div>
+                <div className={"col-md-12 form-wrapper"}>
+                  <h2> Edit Customer </h2>
+                  {submitSuccess && (
+                    <SuccessMessage>
+                      Customer's details has been edited successfully
+                    </SuccessMessage>
+                  )}
+                  <DataEntryForm processFormSubmission={this.processFormSubmission}>
+                    <FormField name="firstName" type="text" placeholder="Enter customer's first name" onChange={this.handleInputChanges} defaultValue={customer.firstName}>First Name</FormField>
+                    <FormField name="lastName" type="text" placeholder="Enter customer's last name" onChange={this.handleInputChanges} defaultValue={customer.lastName}>Last Name</FormField>
+                    <FormField name="email" type="email" placeholder="Enter customer's email address" onChange={this.handleInputChanges} defaultValue={customer.email}>Email</FormField>
+                    <FormField name="company" type="text" placeholder="Enter customer's company" onChange={this.handleInputChanges} defaultValue={customer.company}>Company</FormField>
+                    <FormField name="phone" type="text" placeholder="Enter customer's phone number" onChange={this.handleInputChanges} defaultValue={customer.phone ? customer.phone.toString() : ''}>Phone number</FormField>
+                    <div className="form-group col-md-4 pull-right">
+                      <button className="btn btn-success" type="submit" id="create-customer">
+                        Edit Customer
+                      </button>
+                      {loading &&
+                        <span className="fa fa-circle-o-notch fa-spin" />
+                      }
+                    </div>
+
+                  </DataEntryForm>
+                </div>
               </div>
             </div>
-          </div>
           }
         </div>
     )

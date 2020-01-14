@@ -1,19 +1,15 @@
-describe('My First Test', function() {
-  it('Create new and edit customer', function() {
+describe('Example accessibility tests', function () {
+  it('End to end with cypress-axe accessibility check', function() {
     cy.viewport(1440,1200)
     cy.visit('http://localhost:3001')
     cy.injectAxe();
-    const OPTIONS = {
-      runOnly: {
-        type: 'tag',
-        values: ['blah']
-      }
-    }
-    cy.checkA11y(OPTIONS);
+
+    //Call this on every new page load
+    cy.checkA11y();
     cy.get('#create-customer-link').click()
     cy.get('#create-post-header').contains('Create Post')
 
-    cy.checkA11y(OPTIONS);
+    cy.checkA11y();
     cy.get('#firstName').type('Superman')
     cy.get('#lastName').type('Cypress')
     cy.get('#email').type('super@man.com')
@@ -25,6 +21,6 @@ describe('My First Test', function() {
 
     cy.get('#customers-table').contains('td', 'Superman')
     cy.get('#customers-table').contains('td', 'Cypress')
-    cy.checkA11y(OPTIONS);
+    cy.checkA11y();
   })
 })

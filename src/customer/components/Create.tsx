@@ -5,6 +5,7 @@ import { createNewCustomer } from '../services/customer';
 import DataEntryForm from './DataEntryForm';
 import SuccessMessage from './SuccessMessage';
 import FormField from './FormField';
+import moment from 'moment';
 
 export interface IFormState {
   [key: string]: any;
@@ -55,11 +56,36 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
 
   public render() {
     const { submitSuccess, loading } = this.state;
+    const tenMinutesTime = moment().utc().add(10, 'minutes');
+    const dateTimerString = `date: ${tenMinutesTime}`;
 
     return (
         <div>
           <div className={"col-md-12 form-wrapper"}>
             <h2 id="create-post-header"> Create Post </h2>
+            <div className="uk-grid-small uk-child-width-auto" uk-grid="true"
+                 uk-countdown={dateTimerString}>
+              <div>
+                <div className="uk-countdown-number uk-countdown-hours"/>
+                <div
+                    className="uk-countdown-label uk-margin-small uk-text-center uk-visible@s">Hours
+                </div>
+              </div>
+              <div className="uk-countdown-separator">:</div>
+              <div>
+                <div className="uk-countdown-number uk-countdown-minutes"/>
+                <div
+                    className="uk-countdown-label uk-margin-small uk-text-center uk-visible@s">Minutes
+                </div>
+              </div>
+              <div className="uk-countdown-separator">:</div>
+              <div>
+                <div className="uk-countdown-number uk-countdown-seconds"/>
+                <div
+                    className="uk-countdown-label uk-margin-small uk-text-center uk-visible@s">Seconds
+                </div>
+              </div>
+            </div>
             {!submitSuccess && (
                 <div className="alert alert-info" role="alert">
                   Fill the form below to create a new post
@@ -77,11 +103,11 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
               <FormField name="company" type="text" placeholder="Enter customer's company" onChange={this.handleInputChanges}>Company</FormField>
               <FormField name="phone" type="text" placeholder="Enter customer's phone number" onChange={this.handleInputChanges}>Phone number</FormField>
               <div className="form-group col-md-4 pull-right">
-                <button className="btn btn-success" type="submit" id="create-customer">
+                <button className="uk-button uk-button-default" type="submit" id="create-customer">
                   Create Customer
                 </button>
                 {loading &&
-                <span className="fa fa-circle-o-notch fa-spin" />
+                  <span className="fa fa-circle-o-notch fa-spin" />
                 }
               </div>
             </DataEntryForm>

@@ -1,3 +1,5 @@
+# Performance tests using k6
+
 1. brew install k6 https://docs.k6.io/docs/installation
 2. Click in incognito browser, but before starting, click network tab then preserve logs
 3. Once finished right click on a network call and click save as har

@@ -12,6 +12,7 @@ export interface IFormState {
   values: Customer[];
   submitSuccess: boolean;
   loading: boolean;
+  errorOccurred: boolean;
 }
 
 class Create extends React.Component<RouteComponentProps, IFormState> {
@@ -25,7 +26,8 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
       phone: '',
       values: [],
       loading: false,
-      submitSuccess: false
+      submitSuccess: false,
+      errorOccurred: false
     }
   }
 
@@ -40,11 +42,18 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
       phone: this.state.phone
     };
 
-    this.setState({ submitSuccess: true, values: [...this.state.values, formData], loading: false });
-    await createNewCustomer(formData);
-    setTimeout(() => {
-      this.props.history.push('/');
-    }, 1500);
+    try {
+      await createNewCustomer(formData);
+      this.setState({ submitSuccess: true, values: [...this.state.values, formData], loading: false, errorOccurred: false });
+      setTimeout(() => {
+        this.props.history.push('/');
+      }, 1500);
+    } catch (e) {
+      this.setState({
+        errorOccurred: true
+      });
+      console.error(e);
+    }
   };
 
   private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
@@ -55,7 +64,7 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
   };
 
   public render() {
-    const { submitSuccess, loading } = this.state;
+    const { submitSuccess, loading, errorOccurred } = this.state;
     const tenMinutesTime = moment().utc().add(10, 'minutes');
     const dateTimerString = `date: ${tenMinutesTime}`;
 
@@ -86,15 +95,20 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
                 </div>
               </div>
             </div>
-            {!submitSuccess && (
-                <div className="alert alert-info" role="alert">
+            {!submitSuccess && !errorOccurred &&(
+                <div className="uk-alert uk-alert-info" role="alert">
                   Fill the form below to create a new post
                 </div>
             )}
-            {submitSuccess && (
+            {submitSuccess && !errorOccurred && (
                 <SuccessMessage>
                   The form was successfully submitted!
                 </SuccessMessage>
+            )}
+            {errorOccurred && (
+                <div className="uk-alert uk-alert-danger" role="alert">
+                  Error submitting form. First name and last name are required. Please try again
+                </div>
             )}
             <DataEntryForm processFormSubmission={this.processFormSubmission}>
               <FormField name="firstName" type="text" placeholder="Enter customer's first name" onChange={this.handleInputChanges}>First Name</FormField>

@@ -6,7 +6,7 @@ export interface IState {}
 class SuccessMessage extends React.Component<RouteComponentProps, IState> {
   public render() {
     return (
-        <div className="alert alert-info" role="alert" id="success-banner">
+        <div className="uk-alert uk-alert-success" role="alert" id="success-banner">
           {this.props.children}
         </div>
     )
